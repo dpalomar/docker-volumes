@@ -1,19 +1,7 @@
-Example of Apache with Docker
+Example of Volumes
 ===========
 
-### Apache environment variables
-Apache will make of the following environment variables.
-
-	APACHE_SERVERADMIN=admin@localhost
-	APACHE_SERVERNAME=localhost
-	APACHE_SERVERALIAS=docker.localhost
-	APACHE_DOCUMENTROOT=/var/www
-	APACHE_RUN_USER=www-data
-	APACHE_RUN_GROUP=www-data
-	APACHE_LOG_DIR=/var/web/log/apache2
-	APACHE_PID_FILE=/var/run/apache2.pid
-	APACHE_RUN_DIR=/var/run/apache2
-	APACHE_LOCK_DIR=/var/lock/apache2
+This example is based on [docker-apache](https://github.com/dpalomar/docker-apache.git) project.
 
 
 ### Image Base
@@ -23,14 +11,16 @@ Ubuntu 14.04
 
 ### How to Build
 
-Simply `docker build -t your_image_name https://github.com/dicotraining/docker-sample.git`
+Simply `docker build -t your_image_name https://github.com/dpalomar/docker-volumes.git`
 
 That's all
 
 ### Start the container
-The container has all pre requisites set up to run any apache application. You can specify all needed environment variables.
+The container has all pre requirements set up to run any apache application. You can specify all needed environment variables. In this case we need pass the volume environment variable (*APACHE_DOCUMENTROOT*) to use another folder like document root for apache.
 
-	$ sudo docker run -i -d -p 80 -e APACHE_SERVERNAME=myServer.local 
+	$ sudo docker run -i -d -p 80 -e APACHE_DOCUMENTROOT=/webapps
+
+**NOTE:** `/webapps` is the created default volume  folder on boot with Dockerfile:  [https://github.com/dpalomar/docker-volumes/blob/master/Dockerfile#L33-L35](https://github.com/dpalomar/docker-volumes/blob/master/Dockerfile#L33-L35)
 
 Browser to url http://localhost:80.
 
@@ -43,6 +33,7 @@ Browser to url http://localhost:80.
 
 Now go to `<your container's ip>:<container's port>` in your browser
 
+You should see the _"My server is up"_ message instead of default apache page.
 
 ### Stop the container
 
